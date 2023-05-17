@@ -1,0 +1,139 @@
+openapi: 3.0.2
+info:
+    title: Users API
+    version: 1.0.0
+paths:
+    /users:
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/user'
+                    description: return an users array
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user'
+                required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user'
+                    description: created
+                '405':
+                    description: invalid input
+    '/users/{userId}':
+        get:
+            parameters:
+                -
+                    name: userId
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user'
+                    description: return the user
+                '400':
+                    description: bad request
+                '404':
+                    description: not found
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user'
+                required: true
+            parameters:
+                -
+                    name: userId
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user'
+                    description: ok
+                '400':
+                    description: bad request
+                '404':
+                    description: not found
+        delete:
+            parameters:
+                -
+                    name: userId
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    description: User deleted
+                '404':
+                    description: User not found
+                '500':
+                    description: Internal Server Error
+        parameters:
+            -
+                name: userId
+                in: path
+                required: true
+components:
+    schemas:
+        address:
+            description: ''
+            required:
+                - id
+            type: object
+            properties:
+                id:
+                    description: ''
+                    type: integer
+                street:
+                    description: ''
+                    type: string
+                country:
+                    description: ''
+                    type: string
+                city:
+                    description: ''
+                    type: string
+                postalcode:
+                    description: ''
+                    type: string
+        user:
+            description: ''
+            required:
+                - id
+            type: object
+            properties:
+                id:
+                    description: ''
+                    type: integer
+                firstname:
+                    description: ''
+                    type: string
+                lastname:
+                    description: ''
+                    type: string
+                email:
+                    description: ''
+                    type: string
+                address:
+                    $ref: '#/components/schemas/address'
+                    description: ''
+                birthDate:
+                    format: date
+                    description: ''
+                    type: string

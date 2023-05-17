@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Create User</h1>
+<div mat-dialog-content>
+  <div class="row">
+      <div class="form-group col-md-6">
+        <label>FirstName</label>
+        <input type="text" name="firstname" [(ngModel)]="user.firstname" class="form-control">
+      </div>
+      <div class="form-group col-md-6">
+        <label>Lastname</label>
+        <input type="text" name="lastname" [(ngModel)]="user.lastname" class="form-control">
+      </div>
+      <div class="form-group col-md-6">
+        <label>Email</label>
+        <input type="text" name="email" [(ngModel)]="user.email" class="form-control">
+      </div>
+      <div class="form-group col-md-6">
+        <label>BirthDate</label>
+        <input type="date" name="birthDate" [(ngModel)]="user.birthDate" class="form-control">
+      </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()" cdkFocusInitial>Ok</button>
+</div>
