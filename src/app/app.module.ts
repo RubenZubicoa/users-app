@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { devToolsModules } from "../build-specifics/devTools";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
     ApiModule.forRoot({ rootUrl: "http://localhost:3000" }),
     HttpClientModule,
     BrowserAnimationsModule,
+    devToolsModules
   ],
   providers: [],
   bootstrap: [AppComponent]

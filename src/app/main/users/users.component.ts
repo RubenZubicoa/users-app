@@ -1,9 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/api/models/user';
 import { ApiService } from 'src/app/api/services';
 import { UserFormComponent } from './user-form/user-form.component';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',
@@ -13,8 +15,9 @@ import { UserFormComponent } from './user-form/user-form.component';
 export class UsersComponent implements OnInit {
   private readonly apiService = inject(ApiService)
   private readonly dialog = inject(MatDialog)
+  private readonly usersService = inject(UsersService)
 
-  dataSource: User[] = [];
+  dataSource = new MatTableDataSource();
 
   displayedColumns = ['id', 'firstname', 'lastname', 'email', 'birthDate', 'actions']
 
@@ -23,8 +26,8 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(){
-    this.apiService.usersGet().subscribe((users) => {
-      this.dataSource = users
+    this.usersService.getUsers().subscribe((users) => {
+      this.dataSource.data = users
     })
   }
 
@@ -36,7 +39,7 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((user) => {
-      this.apiService.usersPost({body: user}).subscribe(() => this.getUsers())
+      this.usersService.createUser(user).subscribe(() => this.getUsers())
     });
   }
 
@@ -48,11 +51,11 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((userUpdated) => {
-      this.apiService.usersUserIdPut({userId: user.id, body: userUpdated}).subscribe(() => this.getUsers())
+      this.usersService.updateUser(user.id, userUpdated).subscribe(() => this.getUsers())
     });
   }
 
   deleteUser(id: number): void{
-    this.apiService.usersUserIdDelete({userId: id}).subscribe(() => this.getUsers())
+    this.usersService.deleteUser(id).subscribe(() => this.getUsers())
   }
 }
